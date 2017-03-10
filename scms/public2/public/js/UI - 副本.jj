@@ -1,0 +1,99 @@
+﻿//初始化程序界面
+//程序后续的改动
+var UI = function(){
+
+  function InitWebUi(){
+    alert(V.WIN.height+':'+V.WIN.width)
+    $("#mainView").css({"height":(V.WIN.height-40 -40),"width":V.WIN.width});
+    console.log('height'+window.screen.availHeight,'--->window.height ',V.WIN.height)
+    console.log('width'+window.screen.availWidth,'---->window.width ',V.WIN.width)
+
+    $("#mainView  #main_top_left").css({"width":"40px"});
+    $("#mainView  #main_top_right").css({"width":(V.WIN.width -40).toString()});
+    $("#bottom").css({"height":"40px"});
+    $("#dataNav").animate({ left: V.WIN.width-260 ,bottom:42}, "slow");
+
+
+
+  };
+
+
+  function InitWarningUi(){
+  //open child window for warning web
+    alert('www');
+    var thisWidth = Math.round(window.screen.availWidth*0.9);
+    var thisHeight = Math.round(window.screen.availHeight);
+    if(thisWidth < 1000){thisWidth = window.screen.availWidth};
+    if(thisHeight < 800){thisHeight = window.screen.availHeight};
+
+
+    var WarningWin = V.GUI.Window.open('./app/v1.0.1/views/Make_Warning.html', {
+      position: 'center',
+      width: thisWidth,
+      height: thisHeight
+    });
+  }
+
+  function InitObjectiveWarningUi(){
+  //open child window for warning web
+    var thisWidth = Math.round(V.WIN.width);
+    var thisHeight = Math.round(V.WIN.height);
+    if(thisWidth < 1000){thisWidth = window.screen.availWidth};
+    if(thisHeight < 800){thisHeight = window.screen.availHeight};
+
+
+    var WarningWin = V.GUI.Window.open('./app/v1.0.1/views/object_warning.html', {
+      position: 'center',
+      width: thisWidth,
+      height: thisHeight
+    });
+  }
+
+   function InitSinglelRadarUi(){
+
+    var thisWidth = Math.round(window.screen.availWidth*0.8);
+    var thisHeight = Math.round(window.screen.availHeight*0.8);
+/*     if(thisWidth < 1000){thisWidth = window.screen.availWidth};
+    if(thisHeight < 800){thisHeight = window.screen.availHeight}; */
+
+
+    var WarningWin = V.GUI.Window.open('/views/Singel_radar.html', {
+      position: 'center',
+      width: thisWidth,
+      height: thisHeight
+    });
+  }
+
+  function InitColorSpace(){
+    filename = './app/v1.0.1/config/RmapsIn_tsfc_color.txt'
+    V.FS.readFile(filename,'utf-8',function(err,contents){
+           if(err){return}
+            else{
+              data = contents.split("\n");
+              var q = d3.scale.quantize().domain(data[0].split(",")).range(data[1].split(","));
+              V.color_Model.rmapsIn_tsfc = q;
+            }
+    });
+
+    filename = './app/v1.0.1/config/radar_mosaic_color.txt'
+    V.FS.readFile(filename,'utf-8',function(err,contents){
+           if(err){return}
+            else{
+              data = contents.split("\n");
+              var q = d3.scale.quantize().domain(data[0].split(",")).range(data[1].split(","));
+              V.color_Model.radarMosaic = q;
+            }
+    });
+  }
+
+  return {
+      InitWebUi            : InitWebUi,
+      InitWarningUi        : InitWarningUi,
+      InitObjectiveWarningUi:InitObjectiveWarningUi,
+      InitSinglelRadarUi   : InitSinglelRadarUi,
+      InitColorSpace       : InitColorSpace
+
+  }
+
+
+}

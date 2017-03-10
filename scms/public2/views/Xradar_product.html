@@ -1,0 +1,96 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>X波段雷达产品</title>
+        <script src="../vendor/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+        <link rel="stylesheet" href="../vendor/bootstrap-3.3.5/css/bootstrap-3.0.3-min.css" />
+        <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+       <script>
+
+      $(function(){
+
+
+
+
+         $("#next").click(function(){
+           var pics_num = $('#pics option').length;
+           var checkIndex=$("#pics").get(0).selectedIndex;
+           //alert(checkIndex);
+           var newIndex = checkIndex + 1;
+
+           if(newIndex >=pics_num-1){newIndex = pics_num-1;alert("已经是最后一个啦"); }
+           $("#pics").get(0).selectedIndex=newIndex;
+
+           var which_product = $('#control input[name="p"]:checked').val();
+
+           var choose_picname = $("#pics").find("option:selected").text();
+           var choose_picfile = which_product + "/230/"+choose_picname+".png";
+           //alert(choose_picfile);
+           $("#current_image").attr("src",choose_picfile);
+           $("#picname").html("<p>"+choose_picfile+"</p>");
+
+         })
+
+         $("#prev").click(function(){
+           var pics_num = $('#pics option').length;
+           var checkIndex=$("#pics").get(0).selectedIndex;
+           //alert(checkIndex);
+           var newIndex = checkIndex - 1;
+
+           if(newIndex <=0){newIndex = 0;alert("已经是第一个啦"); }
+           $("#pics").get(0).selectedIndex=newIndex;
+
+           var which_product = $('#control input[name="p"]:checked').val();
+
+           var choose_picname = $("#pics").find("option:selected").text();
+           var choose_picfile = which_product + "/230/"+choose_picname+".png";
+           //alert(choose_picfile);
+           $("#current_image").attr("src",choose_picfile);
+           $("#picname").html("<p>"+choose_picfile+"</p>");
+
+         })
+
+
+          $("#pics").change(function(){
+
+           var which_product = $('#control input[name="p"]:checked').val();
+           //alert(which_product);
+           var choose_picname = $(this).find("option:selected").text();
+           var choose_picfile = which_product + "/230/"+choose_picname+".png";
+           //alert(choose_picfile);
+           $("#current_image").attr("src",choose_picfile);
+           $("#picname").html("<p>"+choose_picfile+"</p>");
+         })
+
+      })
+
+      </script>
+    </head>
+    <body>
+    	  <div style="width:500px;height:500px">
+          <div style="width:100%;height:40px;">
+            <h2 id="picname">
+              X波段雷达产品
+            </h2>
+          </div>
+          <div style="width:100%;height:400px;">
+            <img id="current_image" src="0.5/230/0-2.5.png" width="100%" height="398px">
+          </div>
+          <div style="width:100%;height:58px;" id="control">
+            <select id="pics">
+              <option>0-2.5</option>
+              <option>2.5-5.0</option>
+              <option>10.0-12.5</option>
+            </select>
+
+            <span>冰雹探测</span>
+              <input type="radio" aria-label="..." value="0.5" name="p" checked>
+            <span>相态探测</span>
+              <input type="radio" aria-label="..." value="1.5" name="p">
+           <button id="prev"> 上一个</button>
+           <button id="next"> 下一个</button>
+
+          </div>
+      </div>
+    </body>
+</html>

@@ -1,0 +1,26 @@
+{
+  "name": "scms",
+  "version": "0.1.0",
+  "description": "a simple cms system",
+  "main": "bin/www",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "cms"
+  ],
+  "author": "LC",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.14.0",
+    "connect": "^3.4.1",
+    "connect-mongo": "^1.1.0",
+    "crypto-js": "^3.1.6",
+    "express": "^4.13.3",
+    "formidable": "^1.0.17",
+    "fsmonitor": "^0.2.4",
+    "log4js": "^0.6.37",
+    "mongoose": "^4.1.8",
+    "multer": "^0.1.8"
+  }
+}

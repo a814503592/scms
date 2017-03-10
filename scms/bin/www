@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+
+var app = require('../app');
+var config = require('../config/config');
+// var os = require('os');
+console.log(app)
+app.listen(config.port, function(){
+  console.log('BJMS started, listening on port:', config.port);
+});

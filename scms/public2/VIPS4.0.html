@@ -1,0 +1,587 @@
+<html>
+  <head>
+    <meta charset="utf-8"></meta>
+    <title>VIPS4.0</title>
+    <link rel="stylesheet" href="public/css/app.css"></link>
+    <script type="text/javascript" src="vendor/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="public/css/leaflet.css" />
+  
+    <link rel="stylesheet" href="public/css/chatstyle.css"></link>
+
+    <script src="vendor/leaflet.js"></script>
+    <script type="text/javascript" src="public/js/plugins/canvas_overlay/L.CanvasOverlay_wgr.js"></script>
+    <script src="vendor/d3.v3.min.js"></script>
+    <script src="vendor/topojson.v1.min.js"></script>
+    <script src="vendor/bootstrap-3.3.5/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="vendor/bootstrap-3.3.5/css/bootstrap-3.0.3-min.css" />
+    <script src="vendor/bootstrap-3.3.5/js/bootstrap-multiselect.js"></script>
+    <link rel="stylesheet" href="vendor/bootstrap-3.3.5/css/bootstrap-multiselect.css" />
+    <link href="vendor/kendoui/styles/kendo.common-bootstrap.min.css" rel="stylesheet">
+<!--     <link href="vendor/kendoui/styles/kendo.bootstrap.min.css" rel="stylesheet"> -->
+    <script src="vendor/kendoui/js/kendo.all.min.js"></script>
+    <script src="public/js/timeline/d3-timeline.js"></script>
+<!-- <script src="//apps.bdimg.com/libs/jqueryui/1.10.4/jquery-ui.min.js"></script> -->
+    <!-- chat js -->
+    <script src="public/js/chatLib.js"></script>
+    <script src="public/js/zTool.js"></script>
+    <script src="public/js/DateUtil.js"></script>
+    <script src="public/js/cufon-yui.js"></script>
+    <script src="public/js/brokenrecords_400.font.js"></script>
+
+
+    <script type="text/javascript" src="public/js/vips_definition.js"></script>
+    <script type="text/javascript" src="public/js/common.js"></script>
+
+    <script type="text/javascript" src="public/js/UI.js"></script>
+
+    <script type="text/javascript" src="public/js/chatPad.js"></script>
+<!--     <script type="text/javascript" src="public/js/parse_engine.js"></script>
+    <script type="text/javascript" src="public/js/renderOnMap.js"></script> -->
+    <script type="text/javascript" src="public/js/time.js"></script>
+    <script type="text/javascript" src="public/js/action.js"></script>
+
+    <link rel="stylesheet" href="public/js/anytime.5.1.2.css">
+
+    <script src="public/js/anytime.5.1.2.js"></script>
+
+    <script type="text/javascript" src="public/js/VIPS4.js"></script>
+    <style>
+
+
+    </style>
+
+
+    </head>
+
+    <body>
+    <div style="width:100%;height:40px;" id="myheader">
+
+      <div class="col-md-6" style="float:left">
+        <div class="icon_logo" style="float:left"></div>
+        <div style="float:left;margin-top:5px;">
+          <span>京津冀短时临近监测预报一体化平台</span>
+        </div>
+        <div style="float:left;margin-top:5px;">
+          <span id="nowTime" class="nowTime">15:35</span>
+        </div>
+
+      </div>
+      <div class="col-md-4 text-center" style="font-size:16px"></div>
+      <div class="col-md-2 text-right" style="float:right">
+          <div class="icon_User" style="width:35px;float:right"></div>
+
+
+
+      </div>
+
+
+
+
+
+      </div>
+    <div id="mainView">
+
+
+         <div id="main_top_left">
+          <a class="icon_button_warning"></a>
+          <a class="icon_button_radar"></a>
+          <!-- <a class="icon_button_chat"></a> -->
+           <!-- <a class="icon_button_exit" id="icon_button_exit"></a> -->
+         </div>
+
+         <div id="main_top_right">
+           <div id="map"></div>
+         </div>
+
+
+    </div>
+
+    <div id="bottom">
+           <div style="float:left;flex;width:210px">
+<!--              <a class="icon_button_setting" target="_blank"></a> -->
+             <a class="icon_power"></a>
+
+             <a class="icon_button_Calendar" id="dateTimeField" target="_blank">
+             </a>
+             <a class="icon_button_back" target="_blank"></a>
+             <a id = "icon_button_play" class="icon_button_play" target="_blank"></a>
+             <a class="icon_button_next" target="_blank"></a>
+             <a class="icon_bynow" target="_blank" title="快速定位到当前"></a>
+           </div>
+           <div id="timeline1" style="float:left;flex;"></div><div id="timeline2" style="float:left;flex;"></div>
+           <div id="mouseTips" style="position:absolute;width:165px;height:30px;bottom:40px;font-size:15px;padding:5px 5px;display:none" class="a_demo_five">
+
+           </div>
+
+          <div style="width:50px;float:right">
+            <a id="icon_button_refresh" class="icon_button_refresh" target="_blank" onclick="ACTION.change_refresh()" title="自动刷新控制"></a>
+          </div>
+    </div>
+
+
+
+   <!--========================================================-->
+
+     <div id="alpha_control" class="map_alpha_slider">
+       <input type="range" min="0" max="100" value="40" id="alpha_100" class="alpha_slider"  onchange="renderOnMap.drawingOnCanvas_100()">
+       <input type="range" min="0" max="100" value="90" id="alpha_101" class="alpha_slider"  onchange="renderOnMap.drawingOnCanvas_101()">
+      </div>
+
+      <!-- <div id="mouse_info" class="mouse_info"> -->
+
+      </div>
+
+
+    <!-- 登录框 -->
+    <div class="modal fade" id="modal-login">
+
+                <section id="content" style="position:relative;margin-top:120px;">
+                  <form>
+                    <h1>登录</h1>
+                    <div>
+                      <input type="text" placeholder="用户名" required="" id="name" name="name"/>
+                    </div>
+                    <div>
+                      <input type="password" placeholder="密码" required="" id="password" name="password"/>
+                    </div>
+                    <div>
+                      <input type="button" name="longLogin" value="登录" />
+                      <a href="javascript:alert('x');">忘记密码</a>
+                      <a id="regist_newuser">注册</a>
+                    </div>
+                  </form><!-- form -->
+                </section><!-- content -->
+    </div>
+
+    <!-- 聊天框 -->
+    
+    <div id="dataNav" class="dataNav" style="font-family:'微软雅黑';line-height:24px;margin:0px;">
+      <div id="dataControl" style="overflow-y:auto;max-height:500px;">
+          <div id="radarControl" style="width:100%;clear:both" data-bind="visible: isVisible">
+             <div class="panel-default">
+              <div class="panel-heading" >
+                <span>雷达</span>
+<!--                 <select  data-bind="source:category"></select> -->
+               </div>
+              <div class="panel-body">
+
+                  <div id="radar_1">
+                    <span>组网雷达</span>
+                     <hr class="style-one" />
+                    <div style="width:100px;float:left" alt="各个高度层上最强回波组合">
+                      <input type="radio" checked value="mosaic" name="radarradioGroup" data-bind="events:{ change: upDate}" data-parameter="组网最强回波" </input><span>最大强度</span>
+                    </div>
+                    <div style="width:100px;float:left" alt="垂直方向累计液态水含量">
+                      <input type="radio" value="vil" name="radarradioGroup" data-bind="events:{ change: upDate}" data-parameter="组网液态水含量"></input><span>液态水含量</span>
+                    </div>
+
+                   </div>
+                  <div id="radar_2">
+                    <span>单站雷达</span>
+                     <hr class="style-one" />
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <select id="radarStation" data-bind="events:{ change: upDate}" data-parameter="单雷达站点">
+                        <option value="bj">北京</option>
+                        <option value="tj">天津</option>
+                        <option value="hb">河北</option>
+                        <option value="ty">太原</option>
+                        <option value="zb">张北</option>
+                        <option value="qhd">秦皇岛</option>
+                      </select>
+                    </div>
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" value="single_dbz" name="radarradioGroup" data-bind="events:{ change: upDate}" data-parameter="单雷达强度" ></input><span>强度</span>
+                    </div>
+                    <div style="width:65px;float:left">
+                      <input type="radio" value="single_vel" name="radarradioGroup" data-bind="events:{ change: upDate}" data-parameter="单雷达速度"></input><span>速度</span>
+                    </div>
+                    </br>
+                    <div style="width:100%float:left">
+                      <span>仰角</span>
+                      <input type="radio" value = "0" checked name="radarElevation" data-bind="events:{ change: upDate}" data-parameter="单雷达仰角0.5"></input><span>0.5</span>
+                      <input type="radio" value = "1" name="radarElevation" data-bind="events:{ change: upDate}" data-parameter="单雷达仰角1.5"></input><span>1.5</span>
+                      <input type="radio" value = "2" name="radarElevation" data-bind="events:{ change: upDate}" data-parameter="单雷达仰角2.5"></input><span>2.5</span>
+                      <input type="radio" value = "3" name="radarElevation" data-bind="events:{ change: upDate}" data-parameter="单雷达仰角3.4"></input><span>3.4</span>
+                    </div>
+
+                   </div>
+
+<!--                 <div id="radar_3">
+                  <span>X波段雷达产品</span>
+                     <hr class="style-one" />
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <select>
+                        <option>南郊</option>
+                        <option>南郊</option>
+                        <option>南郊</option>
+                        <option>南郊</option>
+                        <option>南郊</option>
+                        <option>南郊</option>
+                        <option>南郊</option>
+                      </select>
+                    </div>
+
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" value="xradar_hail" name="radarradioGroup" data-bind="events:{ change: upDate}"></input><span>冰雹</span>
+                    </div>
+                    <div style="width:65px;float:left">
+                      <input type="radio" value="xradar_type" name="radarradioGroup" data-bind="events:{ change: upDate}"></input><span>相态</span>
+                    </div>
+                    </br>
+                    <div style="width:100%float:left">
+                      <input type="radio" check></input><span>0.5</span>
+                      <input type="radio"></input><span>1.5</span>
+                      <input type="radio"></input><span>3.4</span>
+                      <input type="radio"></input><span>5.5</span>
+                    </div>
+
+                   </div>
+ -->
+              </div>
+            </div>
+
+            </div>
+          <div id="awsControl" style="width:100%;clear:both" data-bind="visible: isVisible">
+               <div class="panel-default">
+              <div class="panel-heading" >
+
+
+                 <span style="display:inline-block;">自动站</span>
+                 <ul class="corler">
+                   <li class="corler_1" onclick="ACTION.chooseAWScolor('black')"></li><li class="corler_2" onclick="ACTION.chooseAWScolor('white')"></li><li class="corler_3" onclick="ACTION.chooseAWScolor('green')"></li><li class="corler_4" onclick="ACTION.chooseAWScolor('yellow')"></li><li class="corler_5" onclick="ACTION.chooseAWScolor('purple')"></li><li><a><img src="public/css/zoom-out.png" onclick="ACTION.adjust_awsFontSize(-1)" /></a></li><li><a><img src="public/css/zoom-in.png" onclick="ACTION.adjust_awsFontSize(1)" /></a></li>
+                </ul>
+
+
+               </div>
+              <div class="panel-body">
+                  <div id="aws_1">
+                    <span>当前时刻要素</span>
+
+
+                     <hr class="style-one" />
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio"  checked name="awsradiogroup" data-bind="events:{change: upDate}" data-parameter="当前温度"></input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="awsradiogroup" data-bind="events:{ change: upDate}" data-parameter="5分钟降水"></input><span>降水</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="awsradiogroup" data-bind="events:{ change: upDate}" data-parameter="当前湿度"></input><span>湿度</span>
+                    </div>
+                   <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="awsradiogroup" data-bind="events:{ change: upDate}" data-parameter="当前气压"></input><span>气压</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" id="isoverlayawsWind" data-bind="events:{ change: upDate}" data-parameter="当前均风"></input><span>均风</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" id="isoverlayStation" data-bind="events:{ change: upDate}" data-parameter="站点" ></input><span>站点</span>
+                    </div>
+                   </div>
+                  </br>
+                <div id="aws_2">
+                   <span>自动站要素诊断</span>
+                     <hr class="style-one" />
+                    <div style="width:180px;float:left" alt="xxxxxxxxxxx">
+
+                      <select id="aws2_select" class="multiselect" data-bind="events:{ change: upDate}" data-parameter="诊断量">
+                        <optgroup label="降水类">
+                          <option value="P_1h_R">1小时累积</option>
+                          <option value="P_3h_R">3小时累积</option>
+                          <option value="P_6h_R">6小时累积</option>
+                        </optgroup>
+                        <optgroup label="温度类">
+                          <option value="1hhtemp">1小时变温</option>
+                          <option value="3hhtemp">3小时变温</option>
+                          <option value="1hmaxtemp">过去1小时最高温</option>
+                          <option value="1hmintemp">过去1小时最低温</option>
+                        </optgroup>
+                        <optgroup label="湿度类">
+                          <option value="1hhrh">1小时变湿</option>
+                          <option value="3hhrh">3小时变湿</option>
+                        </optgroup>
+                        <optgroup label="气压类">
+                          <option value="1hhpress">1小时变压</option>
+                          <option value="3hhpress">3小时变压</option>
+                        </optgroup>
+
+
+                    </select>
+                    </div>
+
+
+                   </div>
+
+
+
+              </div>
+            </div>
+            </div>
+          <div id="satelliteControl" style="width:100%;z-index:1;clear:both" data-bind="visible: isVisible">
+              <div class="panel-default">
+              <div class="panel-heading" >
+                <span>自动站</span>
+<!--                 <select  data-bind="source:category"></select> -->
+               </div>
+              <div class="panel-body">
+                  <div id="aws_1">
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" name="radioGroup"</input><span>温度</span>
+                    </div>
+
+                   </div>
+
+
+
+              </div>
+            </div>
+            </div>
+          <div id="rmapsControl" style="width:100%;clear:both" data-bind="visible: isVisible">
+              <div class="panel_mini panel-default">
+              <div class="panel-heading" >
+                <span>RMAPS</span>
+               </div>
+              <div class="panel-body">
+                  <div id="RMAPS_1">
+                    <div>
+                      <span>分析预报类（地面）</span>
+                     <hr class="style-one" />
+                    </div>
+                    <div style="width:231px;float:left">
+                    <div style="width:50px;float:left" alt="显示地面温度">
+                      <input type="radio" checked name="radioGroup" data-bind="events:{ change: upDate}" data-parameter="地面温度"</input><span>温度</span>
+                    </div>
+                     <div style="width:50px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"  data-bind="events:{ change: upDate}" data-parameter="地面降水" </input><span>降水</span>
+                    </div>
+                     <div style="width:50px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"  data-bind="events:{ change: upDate}" data-parameter="地面相对湿度" </input><span>湿度</span>
+                    </div>
+                      <div style="width:50px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" id="overlaywind" data-bind="events:{ change: upDate}" data-parameter="地面风场" </input><span>风</span>
+                    </div>
+                    </div>
+
+                    <div style="width:231px;float:left" alt="xxxxxxxxxxx">
+                      <div>
+                      <span>分析预报类（高空）</span>
+                     <hr class="style-one" />
+                     </div>
+
+                      <div style="width:231px;float:left" alt="xxxxxxxxxxx">
+                      <div style="width:50px;float:left" alt="显示地面温度">
+                      <input type="radio" name="radioGroup" data-bind="events:{ change: upDate}" data-parameter="高空温度"</input><span>温度</span>
+                      </div>
+                     <div style="width:50px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"  data-bind="events:{ change: upDate}" data-parameter="高空比湿" </input><span>比湿</span>
+                      </div>
+                      <div style="width:40px;float:left" alt="xxxxxxxxxxx">
+                      <input type="checkbox" id="radioGroup2"  data-bind="events:{ change: upDate}" data-parameter="高空风场"</input><span>风</span>
+                      </div>
+                      <select id="rmaps_level" class="multiselect" style="float:left;width:80px" data-bind="events:{ change: upDate}" data-parameter="高度层" >
+                          <option value="5">4000米</option>
+                          <option value="6">3500米</option>
+                          <option value="5">3000米</option>
+                          <option value="6">2500米</option>
+                          <option value="7">2000米</option>
+                          <option value="8">1500米</option>
+                          <option value="1">1000米</option>
+                          <option value="2">500米</option>
+                          <option value="3">250米</option>
+                          <option value="4">125米</option>
+
+                    </select>
+                      </div>
+                    </div>
+
+                  </div>
+                <div id="RMAPS_2" style="clear:both">
+                    <div>
+                      <span>诊断类</span>
+                     <hr class="style-one" />
+                    </div>
+
+                    <div style="width:60px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup" data-bind="events:{ change: upDate}" data-parameter="CAPE"</input><span>CAPE</span>
+                    </div>
+                     <div style="width:60px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"  data-bind="events:{ change: upDate}" data-parameter="CIN"</input><span>CIN</span>
+                    </div>
+                     <div style="width:60px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"  data-bind="events:{ change: upDate}" data-parameter="水汽诊断" </input><span>水汽</span>
+                    </div>
+
+                  </div>
+
+
+
+              </div>
+            </div>
+            </div>
+      <div id="lightingControl" style="width:100%;clear:both" data-bind="visible: isVisible">
+              <div class="panel_mini panel-default">
+              <div class="panel-heading" >
+                <span>自动站</span>
+<!--                 <select  data-bind="source:category"></select> -->
+               </div>
+              <div class="panel-body">
+                  <div id="aws_1">
+                    <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"</input><span>温度</span>
+                    </div>
+                     <div style="width:65px;float:left" alt="xxxxxxxxxxx">
+                      <input type="radio" name="radioGroup"</input><span>温度</span>
+                    </div>
+
+                   </div>
+
+
+
+              </div>
+            </div>
+            </div>
+      </div>
+
+      <div style="min-height:150px;margin:0px;" class="panel_mini panel-default">
+        <div style="float:left">
+          <span>资料</span>
+          <select id="mydatasource" class="multiselect" multiple="multiple">
+            <option value="radar" selected >雷达</option>
+            <option value="aws"  selected >自动站</option>
+<!--             <option value="satellite" >卫星</option> -->
+            <option value="rmaps" selected >rmaps</option>
+<!--             <option value="lighting" >闪电</option> -->
+          </select>
+          <button id="showhide_panel">
+            收起
+          </button>
+
+        </div>
+       <div id="radar" style="width:100%;clear:both" data-bind="visible: isVisible">
+          <a href="#" class="icon_button_show_eye" style="float:left"  data-bind="click: toggle_show"></a>
+          <span data-bind="text:current_time"></span>
+          <span>雷达-</span><span data-bind="text:current_category"></span>
+      </div>
+      <div id="aws" style="width:100%;clear:both" data-bind="visible: isVisible">
+           <a href="#" class="icon_button_show_eye" style="float:left"  data-bind="click: toggle_show"></a>
+          <span data-bind="text:current_time">201601121230</span>
+          <span>自动站-</span><span data-bind="text:current_category"></spandata-bind></span>
+          <a href="#" id ="aws_loading" class="icon_button_loading" style="float:right"></a>
+      </div>
+<!--       <div id="satellite" style="width:100%;clear:both" data-bind="visible: isVisible">
+           <a href="#" class="icon_button_show_eye" style="float:left"  data-bind="click: toggle_show"></a>
+          <span>201601121230</span>
+          <span>卫星</span>
+      </div> -->
+      <div id="rmaps" style="width:100%;clear:both" data-bind="visible: isVisible">
+           <a href="#" class="icon_button_show_eye" style="float:left"  data-bind="click: toggle_show"></a>
+          <span data-bind="text:current_time">201601121230</span>
+          <span>RMAPS-</span><span data-bind="text:current_category"></span>
+      </div>
+<!--       <div id="lighting" style="width:100%;clear:both" data-bind="visible: isVisible">
+           <a href="#" class="icon_button_show_eye" style="float:left"  data-bind="click: toggle_show"></a>
+          <span>201601121230</span>
+          <span>闪电</span>
+      </div> -->
+      </div>
+
+    </div>
+
+      <div id="chatDiv" style="position:absolute;width:350px;left:40px;top: 70px;border-radius:12px;color:yellow;font-size:16;z-index: 999; ">
+        <div id="inputPad" style="width:350px;position: absolute;bottom: 0;left: 0;background-color:white;border-radius:2px;opacity: 0.7">
+        <!-- 按钮控件 -->
+          <img id="showCtrl" src="public/images/close.png" width="20px" style="cursor:pointer;"><!-- 关闭 -->
+          <img id="settingImg" src="public/images/settings.png" width="20px" style="cursor:pointer;"><!-- 设置 -->
+          <div id='settingPad' style="position: absolute; display:none;">
+            <select id="autoplay">
+              <option value = 'false'>免打扰</option>
+              <option value = 'true'>自动播放</option>
+            </select>
+          </div>
+          <img id="icon_button_chat" src="public/images/chatty.png" width="20px" style="cursor:pointer;"><!-- 聊天框 -->
+          <img id="icon_check_user" src="public/images/at.png" width="20px" style="cursor:pointer;"><!-- 对谁说 -->
+          
+        <!-- 输入框 -->
+          <input style="width:55%;  height:28px" id="chatInput" placeholder="我想说..." type="text" name="chatInput" style="height:25px;background-color:rgba(144, 160, 171, 0.7);">
+        <!-- 按钮控件 -->
+          <img id="img-chatty-record" src="public/images/img.png" width="20px" style="cursor:pointer;"><!-- 上传图片 -->
+            <input id="input-chatty-hide" type="file" src="public/images/img.png" style="display:none;"/>
+          <img id="audio-chatty-record" src="public/images/record.png" width="20px" style="cursor:pointer;"><!-- 录音 -->
+        </div>
+        <div id="chatPad" style="position:absolute;background-color:rgba(144, 160, 171, 0.2);top:0px;height:160px;width:100%;">
+        </div>
+      </div>
+
+      <div id="modal-chat" style='display: none'>
+        <!-- <h1 id="header">聊天窗</h1> -->
+        <h1 id="errorPage"></h1>
+        <div id='mainPage' class='page'>
+            <div style='position: absolute;top:0px;right:0px;'><img width="30px" alt="关闭" id='chatClose' src="public/css/power.png"></div>
+            <div class='talkLeft' >
+              <div id="talkFrame"></div>
+            
+              <div id="ctrlSpan">
+                <button id='chatClear' class='btn btn-primary'>清除</button>
+                <button id='chatRecord' class='btn btn-primary'>查看记录</button>
+              </div>
+            <!-- <div style='overflow: hidden'>
+              
+            </div> -->
+              <div id='inputDiv'>
+              </div>
+              <textarea id='message' placeholder="嗨，随便说点啥呗"></textarea>
+              <div style='overflow: hidden'>
+                <input id="createroom" type="button" value="视频会议" class="btn btn-warning">
+                <input id="send" type="button" value="发送" class="btn btn-success">
+                <botton id="audio-record" class="btn btn-success">按住录音</botton>
+              </div>
+            </div>
+            <div style="display:block;" class="talkRight">
+            <div id="onlineUsers">
+            </div>
+            <div style="text-align: center;">
+            </div>
+          </div>
+          <div style="display:none;" class="viewRight">
+            <div id="viewRecord"></div>
+            <div style="text-align: left;">&nbsp;
+              <botton id="pre" class="btn btn-success">上一页</botton>
+              <botton id="next" class="btn btn-success">下一页</botton>
+              <botton id="closeView" class="btn btn-success">关闭</botton>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+      <div id="check_user" style="position: absolute;left:120px;top:70px;background-color:white;padding:5px;border-radius:2px;z-index:999;display:none;" ></div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,312 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>预警信号制作</title>
+<link href="css/bese-min.css" rel="stylesheet" type="text/css" />
+<link href="css/layout.css" rel="stylesheet" type="text/css" />
+<script src="js/jquery-1.8.3.min.js" type="text/javascript"></script>
+<script src="layer/layer.js" type="text/javascript"></script>
+<script type="text/javascript" src="js/jquery-1.11.0.min.js"></script>
+<link type="text/css" rel="stylesheet" href="css/style.css" />
+<link rel="stylesheet" type="text/css" href="css/jquery-ui.css" />
+<script type="text/javascript" src="js/jquery-ui-1.10.4.custom.min.js"></script>
+<script type="text/javascript" src="js/jquery.ui.datepicker-zh-CN.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-addon.js"></script>
+<script type="text/javascript" src="js/jquery-ui-timepicker-zh-CN.js"></script>
+<script type="text/javascript" src="js/ljx-2016-03-11.js"></script>
+</head>
+
+<body>
+<div class="top_wrap clearfix">
+	<div class="logo fl"></div>
+    <div class="login fr">
+    	<a href="javascript:void(0);" class="loginInfo">
+        	<i class="icon_user"></i>
+        	<span class="loginInfo_txt">登录</span>
+        </a>
+    </div>
+</div>
+<div class="main_wrap clearfix">
+	<div class="main_left fl">
+    	<!--流程-->
+        <div class="step clearfix">
+        	<div class="step01 fl">
+            	<img src="images/step01.png" />
+                <span class="step_startTime">2016-03-01<br />15:00:20</span>
+            </div>
+            <div class="setp_line fl setp_line_passed"></div>
+            <div class="step02 fl">
+            	<img src="images/step02.png" />
+                <span class="step_startTime">2016-03-01<br />15:40:30</span>
+            </div>
+            <div class="setp_line fl"></div>
+            <div class="step03 fl">
+            	<img src="images/step03.png" />
+                <span class="step_startTime">2016-03-01<br />16:00:50</span>
+            </div>
+        </div>
+        <!--制作流程-->
+        <div class="process">
+        	<div class="process_hd">
+            	制作流程
+               	<div class="rightImg"></div>
+            </div>
+            <div class="process_bd clearfix">
+            	<div class="process_nav fl">
+                	<div class="process_nav_item" style="margin-top:20px;">
+                    	<span>类型</span>
+                        <img class="process_nav_item_point" src="images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:34px;">
+                    	<span>日期</span>
+                        <img class="process_nav_item_point" src="images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:20px;">
+                    	<span>落区</span>
+                        <img class="process_nav_item_point" src="images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:20px;">
+                    	<span>内容</span>
+                        <img class="process_nav_item_point" src="images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:110px;">
+                    	<span>指南</span>
+                        <img class="process_nav_item_point" src="images/process_nav_item_point.png" />
+                    </div>
+                </div>
+                <div class="process_content fl">
+                	<!--类型-->
+                    <div class="process_content_item clearfix">
+                    	<select style="width:80px; margin-top:12px; margin-right:8px;" class="fl" id="type">
+                        	<option>发布</option>
+                            <option>解除</option>
+							<option>更新发布</option>
+                        </select>
+                        <select style="width:120px; margin-top:12px; margin-right:8px;" class="fl" id="sec" onchange="foo()">
+                        	<option value="tf">台风预警信号</option>
+                            <option value="by">暴雨预警信号</option>
+							<option value="bx">暴雪预警信号</option>
+							<option value="hc">寒潮预警信号</option>
+							<option value="dljb">道路结冰预警信号</option>
+							<option value="lddf">陆地大风预警信号</option>
+							<option value="hsdf">海上大风预警信号</option>
+							<option value="scb">沙尘暴预警信号</option>
+							<option value="gw">高温预警信号</option>
+							<option value="gh">干旱预警信号</option>
+							<option value="ld">雷电预警信号</option>
+							<option value="bb">冰雹预警信号</option>
+							<option value="sd">霜冻预警信号</option>
+							<option value="dw">大雾预警信号</option>
+							<option value="m">霾预警信号</option>
+
+                        </select>
+                        <span class="signalState" id="signalState">
+                        	
+                        </span>
+                    </div>
+                    <!--日期-->
+                    <div class="process_content_item">
+                    	<span>发布时间：</span>
+                        <input name="act_start_time" type="text" class="ipt" style="width:140px;"/>
+                        <span>签发：</span>
+                        <select style="width:120px;">
+                        	<option>小龙</option>
+                            <option>小乐</option>
+                        </select>
+                    </div>
+                    <!--落区-->
+                    <div class="process_content_item">
+                    	<div class="dropZone">
+                        	<a href="javascript:void(0);" name="direction">西北</a>
+                            <a href="javascript:void(0);" name="direction">北</a>
+                            <a href="javascript:void(0);" name="direction">东北</a>
+                            <a href="javascript:void(0);" name="direction">东</a>
+                            <a href="javascript:void(0);" name="direction">东南</a>
+                            <a href="javascript:void(0);" name="direction">南</a>
+                            <a href="javascript:void(0);" name="direction">西南</a>
+                            <a href="javascript:void(0);" name="direction">西</a>
+                            <a href="javascript:void(0);" style="color:#d8704d;">手绘落区</a>
+                        </div>
+                    </div>
+                    <!--内容-->
+                    <div class="process_content_item">
+                    	<textarea placeholder="请输入内容" class="textareaBox"></textarea>
+                    </div>
+                    <!--指南-->
+                    <div class="process_content_item">
+                    	<textarea id="guide" placeholder="请输入指南" class="textareaBox" readonly="readonly"></textarea>
+                    </div>
+                    <!--按钮-->
+                    <div class="process_content_item" style="border:none;">
+                    	<div class="btn_process_publish">
+                        	<a href="javascript:void(0);">预览</a>
+                        	<a href="javascript:void(0);">发布</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--操作记录-->
+        <div class="operateRec">
+			<div class="operateRec_hd">
+            	操作记录
+               	<div class="rightImg"></div>
+            </div>
+            <div class="operateRec_bd">
+            	<table width="510" align="center">
+                	<thead>
+                    	<tr>
+                            <td bgcolor="#e4e4e4" class="tc">编号</td>
+                            <td bgcolor="#e4e4e4" class="tc">发布时间</td>
+                            <td bgcolor="#e4e4e4" class="tc">类型</td>
+                            <td bgcolor="#e4e4e4" class="tc">状态</td>
+                            <td bgcolor="#e4e4e4" class="tc">操作</td>
+                        </tr>
+                    </thead>
+				</table>
+				<table>
+                    <tbody class="f12" id="tablelsw">
+                    	<tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮红色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮红色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+						<tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮红色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮红色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+						<tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮蓝色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮红色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                        <tr>
+                        	<td class="tc">20160305</td>
+                            <td class="tc">2016-02-10 14:30</td>
+                            <td style="padding-left:4px;">寒潮红色</td>
+                            <td class="tc">发布</td>
+                            <td class="tc"><a href="javascript:void(0);" class="btn_scan">查看</a> <a href="javascript:void(0);" class="btn_scan">导入</a></td>
+                        </tr>
+                    </tbody>
+
+                </table>
+                <div class="page" id="changpage">
+                	
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="main_right fr">
+    	<div class="pdf">
+        	<div class="pdf_top"></div>
+            <div class="pdf_middle">
+            	<div class="pdf_con">
+                	<img src="images/pdf.png" />
+                </div>
+            </div>
+            <div class="pdf_bottom"></div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+$('.loginInfo').on('click', function(){
+    layer.open({
+		type: 2,
+		title: false,
+		shadeClose: true,
+		shade: 0.8,
+		area: ['674px', '305px'],
+		content: 'login.html' //iframe的url
+	}); 
+});
+</script>
+<script type="text/javascript">
+$( "input[name='act_start_time'],input[name='act_stop_time']" ).datetimepicker();
+</script>
+</body>
+</html>

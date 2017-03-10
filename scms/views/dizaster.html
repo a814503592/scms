@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>BJMS Dizaster</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="lib/jquery-datepicker/css/jquery.datetimepicker.css" rel="stylesheet">
+    
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">
+  </head>
+  <body ng-app="webapp">
+    <!-- Left column -->
+    <div class="templatemo-flex-row" >
+      <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="square"></div>
+          <h1 id="currentUser" ></h1>
+        </header>
+        <div class="profile-photo-container">
+          <img id = "headPicture" src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">  
+          <div class="profile-photo-overlay"></div>
+        </div>      
+        <!-- Search box -->
+        <!-- <form class="templatemo-search-form" role="search">
+          <div class="input-group">
+              <button type="submit" class="fa fa-search"></button>
+              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+          </div>
+        </form> -->
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+          </div>
+        <nav class="templatemo-left-nav">          
+          <ul>           
+            <li><a href="/manage-users"><i class="fa fa-users fa-fw"></i>用户管理</a></li>
+            <li><a href="#"><i class="fa fa-file fa-fw"></i>预警信息</a></li>           
+          </ul>
+          <ul calss="list-group">
+            <li><a href="/dizaster" class="active red"><i class="fa fa-file fa-fw"></i>天气共享</a></li>
+            <li><a href="/warning"><i class="fa fa-file fa-fw"></i>预警</a></li>
+          </ul>
+        </nav>
+      </div>
+      <!-- Main content --> 
+      <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+          <div class="row">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
+              <ul class="text-uppercase">
+                <li><a href="/logout">注销</a></li>
+              </ul>  
+            </nav> 
+          </div>
+        </div>
+        <div class="templatemo-content-container" ng-controller="DizasterController">
+          <p align="left">&nbsp;<button class="btn btn-primary" ng-click="createDizaster()">天气共享</button></p>
+          <p align="right">检索:<input type="text" ng-model="filter" />&nbsp;</p>        
+          <div class="templatemo-content-widget no-padding" >            
+            <div class="panel panel-default table-responsive">
+              <table class="table table-striped table-bordered templatemo-user-table">
+                <thead>
+                  <tr>
+                     <!-- <th>创建时间</th> -->                  
+                    <td><a href="" class="white-text templatemo-sort-by sorting"># <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by" ng-click="sort_by('fbtime')">发布时间 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">提交时间 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">天气类型 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">天气标题 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">发布人 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">发布内容 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">发布单位 <span class="caret"></span></a></td>
+                    <td>编辑</td>
+                    <td>详情</td>
+                    <td>删除</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="dizaster in list  | orderBy: 'fbtime' | filter:filter ">
+                    <td><input type="checkbox" name="listTable" ng-value="dizaster._id" ></input></td>
+                    <td><span ng-bind="formatTime(dizaster.fbtime)"></span></td>
+                    <td><span ng-bind="formatTime(dizaster.sytime)"></span></td>              
+                    <td ng-bind="dizaster.dissubtype"></td>
+                    <td ng-bind="dizaster.distitle"></td>
+                    <td ng-bind="dizaster.fbuser"></td>
+                    <td ng-bind="dizaster.fbcontent"></td>
+                    <td ng-bind="dizaster.fbdept"></td>                                     
+                    <td><input type="button" value="修改" ng-click="openUpdator(dizaster._id)" class="templatemo-edit-btn"></td>
+                    <td><input type="button" value="详情" ng-click="openDetail(dizaster._id)" class="templatemo-edit-btn"></td>
+                    <td><input type="button" value="删除" ng-click="deleteDizaster(dizaster._id)" class="templatemo-edit-btn"></td>
+                  </tr>                                          
+                </tbody>
+              </table>    
+            </div>                          
+          </div>
+          <label ng-click="selectAll()">&nbsp;全选</label><label ng-click="reverseCheck()">&nbsp;反选</label><label ng-click="deleteChecked()">&nbsp;删除选中</label>  
+
+    <div class="modal fade" id="modal-editor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>发布预警</h1>
+          </div>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布时间</label>
+                <div class="col-sm-10">
+                  <input type="text" name="date" class="form-control" ng-model="new.fbtime" placeholder="fbtime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">提交时间</label>
+                <div class="col-sm-10">
+                  <input type="text" name="date" class="form-control" ng-model="new.sytime" placeholder="sytime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">灾害类型</label>
+                <div class="col-sm-10">
+                  <!-- <select class="form-control" ng-model="new.unit" placeholder="Unit">
+                  </select> -->
+                  <input type="text" class="form-control" ng-model="new.dissubtype" placeholder="dissubtype" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布人</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.fbuser" placeholder="fbuser" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">标题</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.distitle" placeholder="distitle" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布地址</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.fbaddress" placeholder="fbaddress" />
+                </div>
+              </div>             
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布内容</label>
+                <div class="col-sm-10">
+                  <textarea rows="5" class="form-control" ng-model="new.fbcontent" placeholder="fbcontent" /></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布单位</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.fbdept" placeholder="fbdept" />
+                </div>
+              </div>                             
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button class="btn btn-primary" ng-click="save()">Save</button>
+                  <span class="help-inline text-danger" ng-bind="editorMessage"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="modal fade" id="modal-update">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>灾害</h1>
+          </div>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布时间</label>
+                <div class="col-sm-10">
+                  <input type="text" name="date" class="form-control" ng-model="update.fbtime" placeholder="fbtime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">提交时间</label>
+                <div class="col-sm-10">
+                  <input type="text" name="date" class="form-control" ng-model="update.sytime" placeholder="sytime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">灾害类型</label>
+                <div class="col-sm-10">
+                  <!-- <select class="form-control" ng-model="new.unit" placeholder="Unit">
+                  </select> -->
+                  <input type="text" class="form-control" ng-model="update.distype" placeholder="distype" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布人</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="update.fbuser" placeholder="fbuser" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">标题</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="update.distitle" placeholder="distitle" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布地址</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="update.fbaddress" placeholder="fbaddress" />
+                </div>
+              </div>             
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布内容</label>
+                <div class="col-sm-10">
+                  <textarea rows="5" class="form-control" ng-model="update.fbcontent" placeholder="fbcontent" /></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布单位</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="update.fbdept" placeholder="fbdept" />
+                </div>
+              </div>                             
+              <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button class="btn btn-primary" ng-click="updateIt()">Save</button>
+                  <span class="help-inline text-danger" ng-bind="editorMessage"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal fade" id="modal-detail">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>灾害</h1>
+          </div>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布时间</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" value="{{current.fbtime | date:'yyyy/MM/dd hh:mm' }}" placeholder="fbtime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">提交时间</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" value="{{current.sytime | date:'yyyy/MM/dd hh:mm' }}" placeholder="sytime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">天气类型</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="current.dissubtype" dissubtype="dissubtype" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">天气标题</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="current.distitle" placeholder="distitle" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布人</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="current.fbuser" placeholder="fbuser" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布单位</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="current.fbdept" placeholder="fbdept" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">经度</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="current.lon" placeholder="lon" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">纬度</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="current.lat" placeholder="lat" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布内容</label>
+                <div class="col-sm-10">
+                  <textarea rows="5" class="form-control" ng-model="current.fbcontent" placeholder="fbcontent" /></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- JS -->
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+    <script>
+      $(document).ready(function(){
+        currentUser=$.ajax({
+          url:"/currentUser",
+          async:true,
+          type:"get",
+          dataType:"json",
+          success: function(currentUser) {     
+            $("#currentUser").html(currentUser.name);
+            if(currentUser && currentUser.headPicture){
+              $("#headPicture").attr('src',currentUser.headPicture);
+            }
+          },     
+          error: function(err) {     
+            console.error(err);     
+          }
+        });
+      });
+    </script>
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    
+    <script type="text/javascript" src="webapp.js"></script>
+    <script type="text/javascript" src="services/dizaster.client.service.js"></script>
+    <script type="text/javascript" src="controllers/dizaster.client.controller.js"></script>
+
+    <script type="text/javascript" src="lib/jquery-datepicker/js/jquery.datetimepicker.full.js"></script>
+    <script type="text/javascript" src="lib/moment/moment.js"></script>
+  </body>

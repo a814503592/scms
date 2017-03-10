@@ -1,0 +1,5 @@
+body{overflow:hidden;}
+#mainView{height: 100%; width:100%;overflow:hidden;}
+
+#mainView #main_left_pane {width:40%;height:100%;min-width:300px;background-color:rgb(139, 144, 143);overflow:hidden;}
+#mainView #main_right_pane {width:60%;height:100%;overflow:hidden;}

@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">  
+    <title>BJMS NowcastWarning</title>
+    <meta name="description" content="">
+    <meta name="author" content="templatemo">
+    <!-- 
+    Visual Admin Template
+    http://www.templatemo.com/preview/templatemo_455_visual_admin
+    -->
+    <!-- <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,700' rel='stylesheet' type='text/css'> -->
+    <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">    
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/templatemo-style.css" rel="stylesheet">    
+
+    <link href="lib/ng-table/dist/ng-table.min.css" rel="stylesheet">   
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body ng-app="webapp">
+    <!-- Left column -->
+    <div class="templatemo-flex-row" >
+      <div class="templatemo-sidebar">
+        <header class="templatemo-site-header">
+          <div class="square"></div>
+          <h1>ADMIN</h1>
+        </header>
+        <div class="profile-photo-container">
+          <img id = "headPicture" src="images/profile-photo.jpg" alt="Profile Photo" class="img-responsive">  
+          <div class="profile-photo-overlay"></div>
+        </div>      
+        <!-- Search box -->
+        <!-- <form class="templatemo-search-form" role="search">
+          <div class="input-group">
+              <button type="submit" class="fa fa-search"></button>
+              <input type="text" class="form-control" placeholder="Search" name="srch-term" id="srch-term">           
+          </div>
+        </form> -->
+        <div class="mobile-menu-icon">
+            <i class="fa fa-bars"></i>
+          </div>
+        <nav class="templatemo-left-nav">          
+          <ul>
+            <li><a href="/manage-users"><i class="fa fa-users fa-fw"></i>用户管理</a></li>
+            <li><a href="#"><i class="fa fa-users fa-fw"></i>预警信息</a></li>           
+          </ul>
+          <ul calss="list-group">
+            <li><a href="/dizaster"><i class="fa fa-users fa-fw"></i>灾害</a></li>
+            <li><a href="/nowcastWarning" class="active"><i class="fa fa-users fa-fw"></i>临近预报</a></li>
+            <li><a href="/monitor" ><i class="fa fa-users fa-fw"></i>监测仪</a></li>
+            <li><a href="/warning"><i class="fa fa-users fa-fw"></i>警告</a></li>
+          </ul>  
+        </nav>
+      </div>
+      <!-- Main content --> 
+      <div class="templatemo-content col-1 light-gray-bg">
+        <div class="templatemo-top-nav-container">
+          <div class="row">
+            <nav class="templatemo-top-nav col-lg-12 col-md-12">
+              <ul class="text-uppercase">
+                <!-- <li><a href="" class="active">Admin panel</a></li>
+                <li><a href="">Dashboard</a></li>
+                <li><a href="">Overview</a></li> -->
+                <li><a href="/logout">Logout</a></li>
+              </ul>  
+            </nav> 
+          </div>
+        </div>
+        <div class="templatemo-content-container" ng-controller="NowcastWarningController">
+          <p align="left">&nbsp;<button class="btn btn-primary" ng-click="createNowcastWarning()">填报预警</button></p>
+          <p align="right">检索:<input type="text" ng-model="filter" />&nbsp;</p>        
+          <div class="templatemo-content-widget no-padding" >            
+            <div class="panel panel-default table-responsive">
+              <!-- <div ng-app="webapp" ng-controller="DizasterController"> -->
+                <!-- <ul>
+                    <li ng-repeat="x in names | filter:test | orderBy:'country'">{{ (x.name | uppercase) + ', ' + x.country }}</li>
+                </ul> -->
+            <!-- </div> -->
+              <table class="table table-striped table-bordered templatemo-user-table">
+                <thead>
+                  <tr>
+                     <!-- <th>创建时间</th> -->                  
+                    <td><a href="" class="white-text templatemo-sort-by sorting"># <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by" ng-click="sort_by('fbtime')">发布时间 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">提交时间 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">期号 <span class="caret"></span></a></td> 
+                    <td><a href="" class="white-text templatemo-sort-by">类型 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">内容 <span class="caret"></span></a></td> 
+                    <td><a href="" class="white-text templatemo-sort-by">发布单位 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">发布人 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">签发人 <span class="caret"></span></a></td>
+                    <td><a href="" class="white-text templatemo-sort-by">落区 <span class="caret"></span></a></td> 
+                    <td><a href="" class="white-text templatemo-sort-by">有效时间 <span class="caret"></span></a></td> 
+                    <td><a href="" class="white-text templatemo-sort-by">状态 <span class="caret"></span></a></td>
+
+                    <td><a href="" class="white-text templatemo-sort-by">PDF路径 <span class="caret"></span></a></td>
+                    <td>Edit</td>
+                    <td>Action</td>
+                    <td>Delete</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr ng-repeat="nowcastwarning in list  | orderBy: 'fbtime' | filter:filter ">
+                    <td ng-bind="$index+1">1</td>
+                    <td><span ng-bind="formatTime(nowcastwarning.fbtime)"></span></td>
+                    <td><span ng-bind="formatTime(nowcastwarning.sytime)"></span></td>
+                    <td ng-bind="nowcastwarning.SN_number"></td>
+                    <td ng-bind="nowcastwarning.stype"></td>
+                    <td ng-bind="nowcastwarning.warn_content"></td>
+                    <td ng-bind="nowcastwarning.fbdepartment"></td>
+                    <td ng-bind="nowcastwarning.fbuser"></td>
+                    <td ng-bind="nowcastwarning.singer"></td>
+                    <td ng-bind="nowcastwarning.location"></td>
+                    <td ng-bind="nowcastwarning.valid_time"></td>
+                    <td ng-bind="nowcastwarning.status"></td>
+                    <td ng-bind="nowcastwarning.pdfPath"></td>                                                    
+                    <td><a ng-click="openUpdator(nowcastwarning._id)" class="templatemo-edit-btn">Edit</a></td>
+                    <td><a ng-click="openDetail(user._id)" class="templatemo-edit-btn">Detail</a></td>
+                    <td><a ng-click="deleteNowcastWarning(nowcastwarning._id)" class="templatemo-edit-btn">Delete</a></td>
+                  </tr>                                          
+                </tbody>
+              </table>    
+            </div>                          
+          </div>  
+
+    <div class="modal fade" id="modal-editor">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1>发布预警</h1>
+          </div>
+          <div class="modal-body">
+            <div class="form-horizontal">
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布时间</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" ng-model="new.fbtime" placeholder="fbtime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">提交时间</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" ng-model="new.sytime" placeholder="sytime" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">期号</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.SN_number" placeholder="SN_number" />
+                </div>
+              </div>              
+              <div class="form-group">
+                <label class="col-sm-2 control-label">类型</label>
+                <div class="col-sm-10">
+                  <!-- <select class="form-control" ng-model="new.unit" placeholder="Unit">
+                  </select> -->
+                  <input type="text" class="form-control" ng-model="new.stype" placeholder="stype" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">内容</label>
+                <div class="col-sm-10">
+                  <textarea rows="5" class="form-control" ng-model="new.warn_content" placeholder="warn_content" /></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布单位</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.fbdepartment" placeholder="fbdepartment" />
+                </div>
+              </div>          
+              <div class="form-group">
+                <label class="col-sm-2 control-label">发布人</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.fbuser" placeholder="fbuser" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">签发人</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.singer" placeholder="singer" />
+                </div>
+              </div>             
+              <div class="form-group">
+                <label class="col-sm-2 control-label">落区</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.location" placeholder="location" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">有效时间</label>
+                <div class="col-sm-10">
+                  <input type="date" class="form-control" ng-model="new.valid_time" placeholder="valid_time" />
+                </div>
+              </div>             
+              <div class="form-group">
+                <label class="col-sm-2 control-label">状态</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.status" placeholder="status" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label">PDF路径</label>
+                <div class="col-sm-10">
+                  <input type="text" class="form-control" ng-model="new.pdfPath" placeholder="pdfPath" />
+                </div>
+              </div>
+               <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                  <button class="btn btn-primary" ng-click="save()">Save</button>
+                  <span class="help-inline text-danger" ng-bind="editorMessage"></span>
+                </div>
+              </div>         
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+          <div class="pagination-wrap">
+            <ul class="pagination">
+              <li><a href="#">1</a></li>
+              <li><a href="#">2</a></li>
+              <li class="active"><a href="#">3 <span class="sr-only">(current)</span></a></li>
+              <li><a href="#">4</a></li>
+              <li><a href="#">5</a></li>
+              <li>
+                <a href="#" aria-label="Next">
+                  <span aria-hidden="true"><i class="fa fa-play"></i></span>
+                </a>
+              </li>
+            </ul>
+          </div>                                      
+          <footer class="text-right">
+            <p>Copyright &copy; 2016 aeroimginfo 
+            | Designed by <a href="http://www.aeroimginfo.com" target="_parent">aeroimginfo</a></p>
+          </footer>         
+        </div>
+      </div>
+    </div>
+    
+    <!-- JS -->
+    <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>      <!-- jQuery -->
+    <script type="text/javascript" src="js/templatemo-script.js"></script>      <!-- Templatemo Script -->
+    <script>
+      $(document).ready(function(){
+        currentUser=$.ajax({
+          url:"/currentUser",
+          async:true,
+          type:"get",
+          data:"",
+          dataType:"json",
+          success: function(currentUser) {     
+            //返回的数据用data.d获取内容      
+            $("#currentUser").html(currentUser.name);
+            if(currentUser && currentUser.headPicture){
+              $("#headPicture").attr('src',currentUser.headPicture);
+            }
+          },     
+          error: function(err) {     
+            console.error(err);     
+          }
+        });
+      });
+    </script>
+    <script type="text/javascript" src="lib/angular/angular.js"></script>
+    <script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.js"></script>
+    
+    <script type="text/javascript" src="webapp.js"></script>
+    <script type="text/javascript" src="services/nowcastWarning.client.service.js"></script>
+    <script type="text/javascript" src="controllers/nowcastWarning.client.controller.js"></script>
+
+    <script type="text/javascript" src="lib/moment/moment.js"></script>
+  </body>
+</html>

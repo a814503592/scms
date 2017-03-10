@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>Login form using HTML5 and CSS3</title>
+    <link rel="stylesheet" href="css/style.css">
+  </head>
+    <body>
+		<div class="container">
+			<section id="content">
+				<form action="/doLogin" method="get">
+					<h1>登录</h1>
+					<div>
+						<input type="text" placeholder="账户" required="" id="name" name="name"/>
+					</div>
+					<div>
+						<input type="password" placeholder="密码" required="" id="password" name="password"/>
+					</div>
+					<div>
+						<input type="submit" value="登录" />
+						<a href="javascript:alert('请自行联系管理员！');">忘记密码？</a>
+						<a href="/signup">注册</a>
+					</div>
+				</form><!-- form -->
+				<!-- <div class="button">
+					<a href="#">Download source file</a>
+				</div> -->
+			</section><!-- content -->
+		</div><!-- container -->
+	</body>
+</html>

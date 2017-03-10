@@ -1,0 +1,97 @@
+<html><!DOCTYPE html>
+<html >
+  <head>
+    <meta charset="UTF-8">
+    <title>注册用户</title>
+      <link href="lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    	<link href="lib/bootstrap-fileinput/css/fileinput.min.css" rel="stylesheet">
+    	<style>
+	    	body {TEXT-ALIGN: center;background: #DCDDDF url(../iamges/background.png);}
+			#signup { MARGIN-RIGHT: auto; MARGIN-LEFT: auto; }
+		</style>
+  	</head>
+	    <body ng-app="webapp" ng-controller="SignController">
+			<!-- <div class="modal fade" id="modal-editor">
+                <div class="modal-dialog">
+                  <div class="modal-content"> -->
+                    <div class="modal-fade" id="signup">
+                      <h1 align="center">注册用户</h1>
+                    </div>
+                    <div class="modal-body">
+                      <div class="form-horizontal">
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">姓名</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="new.name" placeholder="User Name" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">密码</label>
+                          <div class="col-sm-4">
+                            <input type="password" class="form-control" ng-model="new.password" placeholder="Password" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">单位</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="new.unit" placeholder="Unit" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">部门</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="new.department" placeholder="Department" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">职位</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="new.position" placeholder="Position" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">电话</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="new.phoneNum" placeholder="PhoneNum" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">邮箱</label>
+                          <div class="col-sm-4">
+                            <input type="text" class="form-control" ng-model="new.email" placeholder="Email" />
+                          </div>
+                        </div>
+                        <div class="form-group">
+                          <label class="col-sm-4 control-label">头像</label>
+                          <div class="col-sm-4">
+                            <input id="headPicture-Url" name="headPicture" class="form-control file" type="file" data-show-preview="false" ng-model="new.headPicture" />
+                          </div>
+                        </div>            
+                        <div class="form-group">
+                          <div class="col-sm-offset-2 col-sm-8">
+                            <button class="btn btn-primary" ng-click="sign()">注册</button>
+                            <a class="btn btn-primary" href="/login">返回登录</a>
+                            <span class="help-inline text-danger" ng-bind="editorMessage"></span>
+                          </div>                          
+                        </div>
+                      </div>
+                     </div>
+                  <!--</div>
+                </div>
+              </div> -->
+          	<script type="text/javascript" src="lib/jquery/dist/jquery.js"></script>
+	        <script type="text/javascript" src="lib/angular/angular.js"></script>
+			<script type="text/javascript" src="lib/bootstrap/dist/js/bootstrap.js"></script>
+			<script type="text/javascript" src="lib/bootstrap-fileinput/js/fileinput.min.js"></script>
+    		<script type="text/javascript" src="lib/bootstrap-fileinput/js/fileinput_locale_zh.js"></script>
+
+	        <script type="text/javascript" src="webapp.js"></script>
+		    <script type="text/javascript" src="services/signup.client.service.js"></script>
+		    <script type="text/javascript" src="controllers/signup.client.controller.js"></script>
+	        <script>
+	        $(document).ready(function(){
+	        	// $("#modal-editor").modal('show');
+	        });	        	
+	        </script>
+		</body>
+</html>

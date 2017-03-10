@@ -1,0 +1,115 @@
+<html>
+  <head>
+
+    <meta charset="utf-8"></meta>
+    <link rel="stylesheet" href="../public/css/app.css"></link>
+
+    <script type="text/javascript" src="../vendor/jquery-2.1.4.min.js"></script>
+    <link rel="stylesheet" href="../public/css/leaflet.css" />
+    <script src="../vendor/leaflet.js"></script>
+    <script src="http://d3js.org/topojson.v1.min.js"></script>
+
+    <script src="../vendor/d3.v3.min.js"></script>
+
+
+     <link href="../vendor/bootstrap-3.3.5/css/bootstrap.min.css" rel="stylesheet">
+    <script src="../vendor/kendoui/js/kendo.all.min.js"></script>
+    <script type="text/javascript" src="../public/js/plugins/canvas_overlay/L.CanvasOverlay_wgr.js"></script>
+    <script type="text/javascript" src="../public/js/vips_definition.js"></script>
+    <script type="text/javascript" src="../public/js/dictionary.js"></script>
+    <script type="text/javascript" src="../public/js/renderOnMap.js"></script>
+
+    <script type="text/javascript" src="../public/js/singel_radar.js"></script>
+
+    <style>
+
+    </style>
+
+
+    </head>
+
+    <body>
+
+      <!-- Stack the columns on mobile by making one full-width and the other half-width -->
+<div class="row">
+  <div class="col-md-4">.col-md-4</div>
+  <div class="col-md-4 text-center" style="font-size:16px">单雷达数据分析及报警系统</div>
+  <div class="col-md-4 text-right">.col-md-4</div>
+</div>
+      <div id="map">
+
+      </div>
+
+      <div class="map_nav">
+<!--         <a class="icon_button_Calendar" id="dateTimeField" target="_blank"></a> -->
+        <ul>
+          <li><<</li>
+          <li>>></li>
+        </ul>
+        <ul>
+          <li>强度</li>
+          <li>速度</li>
+        </ul>
+        <ul class="nav" style="right:-40;">
+
+          <li>19</li>
+          <li>15</li>
+          <li>10</li>
+          <li>6.2</li>
+          <li>4.4</li>
+          <li>3.4</li>
+          <li>2.5</li>
+          <li>1.5</li>
+          <li>0.5</li>
+        </ul>
+      </div>
+    <div class="legend">
+      <div class="speed">
+        <ul>
+          <li style="background:#333; font-size:12px;">DBZ</li>
+          <li style="background:#00ACA4;">-5</li>
+          <li style="background:#C0C0FE;">0</li>
+          <li style="background:#7A72EF;">5</li>
+          <li style="background:#1E26D0;">10</li>
+          <li style="background:#A6FCA8;">15</li>
+          <li style="background:#00EA00;">20</li>
+          <li style="background:#10921A;">25</li>
+          <li style="background:#FFF464;">30</li>
+          <li style="background:#C8C802;">35</li>
+          <li style="background:#8C8C00;">40</li>
+          <li style="background:#FEACAC;">45</li>
+          <li style="background:#FE645C;">50</li>
+          <li style="background:#EE0230;">55</li>
+          <li style="background:#D48EFE;">60</li>
+          <li style="background:#AA24FA;">65</li>
+          <li style="background:#00ACA4;">70</li>
+        </ul>
+      </div>
+      <div class="speed">
+        <ul>
+          <li style="background:#333; font-size:12px;">m/s</li>
+          <li style="background:#00ACA4;">-5</li>
+          <li style="background:#C0C0FE;">0</li>
+          <li style="background:#7A72EF;">5</li>
+          <li style="background:#1E26D0;">10</li>
+          <li style="background:#A6FCA8;">15</li>
+          <li style="background:#00EA00;">20</li>
+          <li style="background:#10921A;">25</li>
+          <li style="background:#FFF464;">30</li>
+          <li style="background:#C8C802;">35</li>
+          <li style="background:#8C8C00;">40</li>
+          <li style="background:#FEACAC;">45</li>
+          <li style="background:#FE645C;">50</li>
+          <li style="background:#EE0230;">55</li>
+          <li style="background:#D48EFE;">60</li>
+          <li style="background:#AA24FA;">65</li>
+          <li style="background:#00ACA4;">70</li>
+        </ul>
+      </div>
+    </div>
+      <div id="cursor_info" style="width:160px;height:40px;position:absolute;z-index:9999;bottom:10px;">xxxxx</div>
+      <div id="blockImage"  style="display:none;width: 300px;height:300px;position:absolute; z-index:200; top:50px; left:20px;background:#ccc;" >
+        <img id="point_image" src="../0_24.png" width=300 height:300/>
+      </div>
+  </body>
+</html>

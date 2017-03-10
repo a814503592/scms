@@ -1,0 +1,324 @@
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>预警信号制作</title>
+<link href="Make_Warning/css/bese-min.css" rel="stylesheet" type="text/css" />
+<link href="Make_Warning/css/layout.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="Make_Warning/js/jquery-1.11.0.min.js"></script>
+<!-- Kendou -->
+<!-- <link href="../content/shared/styles/examples-offline.css" rel="stylesheet"> -->
+
+<link href="Make_Warning/css/examples-offline.css" rel="stylesheet">
+<link href="Make_Warning/css/kendo.common.min.css" rel="stylesheet">
+<link href="Make_Warning/css/kendo.rtl.min.css" rel="stylesheet">
+<link href="Make_Warning/css//kendo.default.min.css" rel="stylesheet">
+<link href="Make_Warning/css/kendo.dataviz.min.css" rel="stylesheet">
+<link href="Make_Warning/css/kendo.dataviz.default.min.css" rel="stylesheet">
+<script src="Make_Warning/js/kendo.all.min.js"></script>
+
+<script src="../public/js/plugins/pdfobject/pdfobject.js"></script>
+<link rel="stylesheet" href="Make_Warning/js/anytime.5.1.2.css">
+<script src="Make_Warning/js/anytime.5.1.2.js"></script>
+
+<script type="text/javascript" src="Make_Warning/js/ljx-2016-03-11.js"></script>
+</head>
+
+<body>
+<div class="top_wrap clearfix">
+	<div class="logo fl"></div>
+    <div class="login fr">
+    	<a href="javascript:void(0);" class="loginInfo">
+        	<i class="icon_user"></i>
+        	<span class="loginInfo_txt">登录</span>
+        </a>
+    </div>
+</div>
+<div class="main_wrap clearfix">
+
+
+
+
+	<div class="main_left fl" id="main_left">
+    	<!--流程-->
+
+        <!--制作流程-->
+        <form class="process">
+        	<div class="process_hd">
+            	制作流程
+<!--                	<div class="rightImg"></div> -->
+            </div>
+            <div class="process_bd clearfix">
+            	<div class="process_nav fl">
+                	<div class="process_nav_item" style="margin-top:20px;">
+                    	<span>类型</span>
+                        <img class="process_nav_item_point" src="Make_Warning/images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:34px;">
+                    	<span>日期</span>
+                        <img id="date" class="process_nav_item_point" src="Make_Warning/images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:20px;">
+                    	<span>落区</span>
+                        <img class="process_nav_item_point" src="Make_Warning/images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:20px;">
+                    	<span>内容</span>
+                        <img class="process_nav_item_point" src="Make_Warning/images/process_nav_item_point.png" />
+                    </div>
+                    <div class="process_nav_item" style="margin-top:110px;">
+                    	<span>指南</span>
+                        <img class="process_nav_item_point" src="Make_Warning/images/process_nav_item_point.png" />
+                    </div>
+                </div>
+                <div class="process_content fl">
+                	<!--类型-->
+                    <div class="process_content_item clearfix">
+                    	<select style="width:80px; margin-top:12px; margin-right:8px;" class="fl" id="warning_action">
+                        	<option>发布</option>
+                            <option>解除</option>
+				            <option>升级发布</option>
+				            <option>降级发布</option>
+                      </select>
+
+                      <select style="width:120px; margin-top:12px; margin-right:8px;" class="fl" id="warning_type" onchange="foo()">
+                        <option value="TYPHOON">台风预警信号</option>
+                        <option value="RAIN">暴雨预警信号</option>
+                        <option value="SNOW">暴雪预警信号</option>
+                        <option value="COLD">寒潮预警信号</option>
+                        <option value="ROAD">道路结冰预警信号</option>
+                        <option value="DUST">沙尘暴预警信号</option>
+                        <option value="HEAT">高温预警信号</option>
+                        <option value="DROU">干旱预警信号</option>
+                        <option value="LIGH">雷电预警信号</option>
+                        <option value="HAIL">冰雹预警信号</option>
+                        <option value="FROS">霜冻预警信号</option>
+                        <option value="FOGW">大雾预警信号</option>
+                        <option value="HAZE">霾预警信号</option>
+
+                      </select>
+                        <span class="signalState" id="signalState">
+
+                        </span>
+                    </div>
+                    <!--日期-->
+                    <div class="process_content_item">
+                    	<span>发布时间：</span>
+<!--                         <input name="act_start_time" type="text" class="ipt" style="width:140px;"/> -->
+                        <input type="text" id="dateTimeField">
+
+                      <span>签发：</span>
+                        <select style="width:120px;" class="field" id="warning_sign">
+                        	<!-- <option>小龙</option>
+                            <option>小乐</option> -->
+                        </select>
+                        <fieldset>
+                            <span>编&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;号：</span>
+                            <input type="text" id="SN_number">
+                        </fieldset>
+                    </div>
+                    <!--落区-->
+                    <div class="process_content_item">
+                    	<div class="dropZone">
+                        <a href="javascript:void(0);" name="direction">全市</a>
+                        <a href="javascript:void(0);" name="direction">西北</a>
+                        <a href="javascript:void(0);" name="direction">北</a>
+                        <a href="javascript:void(0);" name="direction">东北</a>
+                        <a href="javascript:void(0);" name="direction">东</a>
+                        <a href="javascript:void(0);" name="direction">东南</a>
+                        <a href="javascript:void(0);" name="direction">南</a>
+                        <a href="javascript:void(0);" name="direction">西南</a>
+                        <a href="javascript:void(0);" name="direction">西</a>
+                        <a href="javascript:void(0);" style="color:#d8704d;">手绘落区</a>
+                      </div>
+                     <!--  <div style="float:left">
+                        <div id="location" class="location"></div>
+                        <div id="location2" class="location"></div>
+                      </div> -->
+                    </div>
+                    <!--内容-->
+                    <div class="process_content_item">
+                    	<textarea placeholder="请输入内容" id="warning_content" class="textareaBox"></textarea>
+                    </div>
+                    <!--指南-->
+                    <div class="process_content_item">
+                    	<textarea id="guide" placeholder="请输入指南" class="textareaBox"></textarea>
+                    </div>
+                    <!--按钮-->
+                    <div class="process_content_item" style="border:none;">
+                    	<div class="btn_process_publish">
+                        	<a href="javascript:void(0);" id="refresh">预览</a>
+                        	<a href="javascript:void(0);" id="publish">发布</a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </form>
+        <!--操作记录-->
+        <div class="">
+			<div id="history" class=""></div>
+        </div>
+    </div>
+    <div class="main_right fl" id="main_right">
+
+      <div class="step clearfix">
+        	<div class="step01 fl">
+            	<img src="Make_Warning/images/step01.png" />
+                <span class="step_startTime">15:00:20</span>
+            </div>
+            <div class="setp_line fl setp_line_passed"></div>
+            <div class="step02 fl">
+            	<img src="Make_Warning/images/step02.png" />
+                <span class="step_startTime">15:40:30</span>
+            </div>
+            <div class="setp_line fl"></div>
+            <div class="step03 fl">
+            	<img src="Make_Warning/images/step03.png" />
+                <span class="step_startTime">16:00:50</span>
+            </div>
+        </div>
+
+
+    	<div id="mypdf">
+
+        </div>
+    </div>
+</div>
+<script type="text/x-kendo-template" id="template">
+    <div class="toolbar">
+        <label class="category-label" for="unit">地区：</label>
+        <input type="search" id="unit" style="width: 150px"/>
+    </div>
+</script>
+
+<script>
+$(document).ready(function() {
+    inItGrid();
+});
+function inItGrid(){
+    var warnings;
+    var request = require('request');
+    request.get({url: 'http://172.18.5.40:7101/vips4/warning'},function(err, res, body){
+        warnings = JSON.parse(body);
+        var grid = $("#history").kendoGrid({
+            dataSource: {
+                data: warnings,
+                schema: {
+                    model: {
+                        fields: {
+                            SN_number: { type: "number" },
+                            fbtime: { type: "date" },
+                            distype: { type: "string" },
+                            status: { type: "string" }
+                            // _id: { type: "string" }
+                        }
+                    }
+                },
+                sort: {
+                    field: "fbtime",
+                    dir: "desc"
+                },
+                pageSize: 4
+            },
+            toolbar: kendo.template($("#template").html()),
+            filterable: {
+                            extra: false,//是否双过滤条件，默认为true
+                            mode: "row"
+                        },
+            height: 260,
+            scrollable: true,
+            sortable: {
+                mode: "single",
+                allowUnsort: false
+            },
+            filterable: true,
+            pageable: {
+                input: true,
+                numeric: false
+            },
+            fontSize:40,
+            columns: [
+                { field: "SN_number", title: "编号" },
+                { field: "fbtime", title: "发布时间", format: "{0:yyyyMMdd HH:mm}" },
+                { field: "distype", title: "类型" },
+                { field: "status", title: "状态", width: "80px" },
+                { command: [{ text: "查看", click: showPDF },{ text: "导入", click: putInIt },{ text: "解除", click: release }], title: "操作", width: "100px"}
+            ]
+        });
+        var unitData = [{unit:"北京台"},{unit:"朝阳"},{unit:"昌平"}];
+        var dropDown = grid.find("#unit").kendoDropDownList({
+                        dataTextField: "unit",
+                        dataValueField: "unit",
+                        autoBind: false,
+                        optionLabel: "全市",
+                        dataSource: {
+                            data: unitData,
+                            schema: {
+                                model: {
+                                    fields: {
+                                        unit: { type: "string" }
+                                    }
+                                }
+                            },
+                        },
+                        value: userUnit,
+                        text: userUnit,
+                        open: function() {
+                            var value = this.value();
+                            if (value) {
+                                grid.data("kendoGrid").dataSource.filter({ field: "fbuser", operator: "eq", value: value });
+                            } else {
+                                grid.data("kendoGrid").dataSource.filter({});
+                            }
+                        },
+                        change: function() {
+                            var value = this.value();
+                            if (value) {
+                                grid.data("kendoGrid").dataSource.filter({ field: "fbuser", operator: "eq", value: value });
+                            } else {
+                                grid.data("kendoGrid").dataSource.filter({});
+                            }
+                        }
+                    });
+    });
+}
+
+// function publicPDF(){
+//     alert("good")
+// }
+function putInIt(e){
+    e.preventDefault();
+    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    $('#warning_content').val(dataItem.warn_content)
+}
+function release(e){
+    e.preventDefault();
+    var dataItem = this.dataItem($(e.currentTarget).closest("tr"));
+    // $("#warning_action").find("option:selected").text();
+    document.getElementById("warning_action").options[1].setAttribute("selected", true);
+    // $("#warning_action").eq(2).attr("selected",true);
+    $('#SN_number').val(dataItem.SN_number);
+}
+
+</script>
+<style>
+    /*#history .k-grid-toolbar
+    {
+        padding: .6em 1.3em;
+    }
+    .unit-label
+    {
+        vertical-align: middle;
+        padding-right: .5em;
+    }
+    #unit
+    {
+        vertical-align: middle;
+    }*/
+    .toolbar {
+        float: right;
+    }
+</style>
+
+</body>
+</html>

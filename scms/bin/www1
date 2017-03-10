@@ -1,0 +1,42 @@
+#!/usr/bin/env node
+/**
+ * [项目启动文件，主要功能：
+ * 	提供restful API接口进行CRUD操作mongo数据库
+ * 	实现用户，权限，数据界面化管理]
+ * @type {[description]}
+ */
+var cluster = require('cluster');//实现多进程运行
+var app = require('../app');
+var config = require('../config/config');
+var os = require('os');
+
+if (cluster.isMaster){
+  // 繁衍工人进程，数量跟系统中的CPU数量一样
+	for (var i = 0, n = os.cpus().length; i < n; i += 1){
+		cluster.fork();
+	}
+	cluster.on('listening',function(worker,address){
+		console.log('核心'+worker.id+' pid:'+ worker.process.pid);
+	});
+	cluster.on('exit', function(worker, code, signal) {
+		console.log('核心'+worker.id+' pid:'+ worker.process.pid+' 仙逝')
+		setTimeout(function() {
+			console.log('核心'+worker.id+' pid:'+ worker.process.pid+' 涅槃')
+			cluster.fork();
+		},2000);
+	});
+}else{
+	// 多个监听启动，用nigix实现负载均衡
+	app.listen(config.port, function(){
+	  console.log('BJMS started, listening on port:', config.port);
+	});
+	app.listen(config.port+1, function(){
+	  console.log('BJMS started, listening on port:', config.port+1);
+	});
+	app.listen(config.port+2, function(){
+	  console.log('BJMS started, listening on port:', config.port+2);
+	});
+	app.listen(config.port+3, function(){
+	  console.log('BJMS started, listening on port:', config.port+3);
+	});
+}
